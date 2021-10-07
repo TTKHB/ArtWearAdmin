@@ -10,7 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const InsertProductPage = () => {
+const UpdateProduct = () => {
   const [value, setValue] = React.useState("");
 
   console.log("value", value.imagePreviewUrl);
@@ -69,6 +69,13 @@ const InsertProductPage = () => {
         <TextField
           required
           id="outlined-required"
+          label="ID"
+          defaultValue="Hello World"
+          fullWidth
+        />
+        <TextField
+          required
+          id="outlined-required"
           label="Tên"
           defaultValue="Hello World"
           fullWidth
@@ -121,4 +128,4 @@ const InsertProductPage = () => {
   );
 };
 
-export default InsertProductPage;
+export default UpdateProduct;

@@ -36,7 +36,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
 const drawerWidth = 240;
 
 //sửa đúng cấu trúc để thêm screen to navigate
@@ -44,13 +43,22 @@ const data = [
   {
     id: "1",
     icon: <MailIcon />,
-    label: "test1",
+    label: "Quản lý sản phẩm",
     data: [
-      { label: "into test", icon: <MailIcon />, page: "/qlsanpham/sanpham" },
       {
-        label: "into test2",
+        label: "Tất cả sản phẩm",
         icon: <MailIcon />,
-        page: "/abc",
+        page: "/qlsanpham/sanpham",
+      },
+      {
+        label: "Thêm sản phẩm",
+        icon: <MailIcon />,
+        page: "/qlsanpham/addsanpham",
+      },
+      {
+        label: "Cập nhật sản phẩm",
+        icon: <MailIcon />,
+        page: "/qlsanpham/updatesanpham",
       },
     ],
   },
@@ -66,20 +74,34 @@ const data = [
 
 function MainDrawer(props) {
   const [open, setOpen] = React.useState(
-    localStorage.getItem("LIST_OPEN") || []
+    JSON.parse(localStorage.getItem("LIST_COLLAPSE")) || []
+  );
+  const [selectedItem, setSelectedItem] = React.useState(
+    JSON.parse(localStorage.getItem("LIST_ITEM")) || {}
   );
 
-  React.useEffect(() => {
-    localStorage.setItem("LIST_OPEN", open);
-  }, [open]);
-
-  console.log("open", open);
-
-  const handleClick = (id) => {
+  const handleCollapse = (id) => {
+    console.log("id", id);
     // setOpen(!open);
     setOpen((prevState) => ({ ...prevState, [id]: !prevState[id] }));
-    console.log("open", open);
   };
+  const handleSelectedItem = (id, index) => {
+    setSelectedItem({
+      id: id,
+      index: index,
+    });
+    console.log("id213", selectedItem[id]);
+  };
+
+  // save expanded collapse
+  React.useEffect(() => {
+    localStorage.setItem("LIST_COLLAPSE", JSON.stringify(open));
+  }, [open]);
+
+  // save selected item
+  React.useEffect(() => {
+    localStorage.setItem("LIST_ITEM", JSON.stringify(selectedItem));
+  }, [selectedItem]);
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -187,7 +209,7 @@ function MainDrawer(props) {
               disableRipple
               disableTouchRipple
               disableFocusRibble
-              onClick={(id) => handleClick(item.id)}
+              onClick={() => handleCollapse(item.id)}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText
@@ -201,7 +223,7 @@ function MainDrawer(props) {
                   </Typography>
                 }
               />
-              {open ? <ExpandLess /> : <ExpandMore />}
+              {open[item.id] ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Divider />
 
@@ -218,11 +240,20 @@ function MainDrawer(props) {
                     color="black"
                   >
                     <ListItemButton
+                      onClick={() => handleSelectedItem(item.id, index)}
                       disableRipple
                       disableTouchRipple
                       disableFocusRibble
                       sx={{ pl: 4 }}
-                      style={{ borderRadius: 10 }}
+                      style={
+                        selectedItem.id == item.id &&
+                        selectedItem.index == index
+                          ? {
+                              borderRadius: 10,
+                              color: "#007FFF",
+                            }
+                          : { borderRadius: 10 }
+                      }
                     >
                       <ListItemIcon>{data.icon}</ListItemIcon>
                       <ListItemText primary={data.label} />
@@ -320,9 +351,6 @@ function MainDrawer(props) {
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
@@ -347,7 +375,13 @@ function MainDrawer(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3 }}
+        style={{
+          backgroundColor: "rgb(248 248 252)",
+        }}
+      >
         {/* add router */}
         <Toolbar />
         <ProductRouter />

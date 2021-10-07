@@ -24,6 +24,11 @@ import Link from "@mui/material/Link";
 
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
+import { Link as LinkRouter } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
+import baseURL from "./../../assets/common/baseUrl";
+import axios from "axios";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -69,10 +74,21 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function RecipeReviewCard(props) {
-  console.log(props);
+  const [products, setProducts] = React.useState([]);
+  const [numPage, setNumPage] = React.useState(1);
+  console.log("product", products);
+  const productPerPage = 5;
+  const indexOfLastProduct = numPage * productPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+  const currentProduct = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const [expanded, setExpanded] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
+  console.log(location.pathname);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,25 +96,65 @@ export default function RecipeReviewCard(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  let history = useHistory();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const HandleNavigateDetails = (id) => {
+    // history.push({"/qlsanpham/sanpham/" + id});
+    history.push({
+      pathname: "/qlsanpham/sanpham/" + id,
+      state: { id: id },
+    });
+  };
+
+  React.useEffect(() => {}, [numPage]);
+
+  // Fetch product
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/products`)
+      .then(function (response) {
+        setProducts(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+    return () => {
+      setProducts([]);
+    };
+    // baseURL
+  }, []);
+
+  const formatDate = (date) => {
+    var options = {
+      weekday: "long",
+      year: "numeric",
+      month: "2-digit",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      timeZoneName: "long",
+    };
+
+    return date.toLocaleDateString("vi", options);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Container sx={{ flexGrow: 1 }}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
-          MUI
+          ArtWear
         </Link>
-        <Link
-          underline="hover"
-          color="inherit"
-          href="/getting-started/installation/"
-        >
-          Core
+        <Typography color="text.primary">Quản lý sản phẩm</Typography>
+        <Link underline="hover" color="inherit" href="/qlsanpham/sanpham">
+          Sản phẩm
         </Link>
-        <Typography color="text.primary">Breadcrumbs</Typography>
       </Breadcrumbs>
       <br></br>
       {/* end breadcrumbs */}
@@ -107,8 +163,8 @@ export default function RecipeReviewCard(props) {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {Array.from(Array(20)).map((_, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
+        {currentProduct.map((item, index) => (
+          <Grid item xs={2} sm={4} md={4} key={item.id}>
             <Card sx={{ maxWidth: 320 }}>
               <CardHeader
                 action={
@@ -116,8 +172,8 @@ export default function RecipeReviewCard(props) {
                     <MoreVertIcon />
                   </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={item.ten}
+                subheader={formatDate(new Date(item.ngaytao))}
               />
 
               <StyledMenu
@@ -151,14 +207,17 @@ export default function RecipeReviewCard(props) {
               <CardMedia
                 component="img"
                 height="250"
-                image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ6fwjuz_zQwSk96BKGDSAsmo4YRdmPfh0tQ&usqp=CAU"
+                image={item.ThumbImg}
                 alt="Paella dish"
+                onClick={() => HandleNavigateDetails(item.id)}
               />
               <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  This impressive paella is a perfect party dish and a fun meal
-                  to cook together with your guests. Add 1 cup of frozen peas
-                  along with the mussels, if you like.
+                <Typography
+                  style={{ fontWeight: "bold" }}
+                  variant="h6"
+                  color="text.secondary"
+                >
+                  đ {item.gia}
                 </Typography>
               </CardContent>
             </Card>
@@ -168,8 +227,16 @@ export default function RecipeReviewCard(props) {
 
       {/* box pagination */}
       <Stack spacing={4} style={{ marginTop: 40 }}>
-        <Pagination count={10} showFirstButton showLastButton />
+        <Pagination
+          page={numPage}
+          onChange={(event, page) => {
+            setNumPage(page);
+          }}
+          count={Math.ceil(products.length / 5)}
+          showFirstButton
+          showLastButton
+        />
       </Stack>
-    </Box>
+    </Container>
   );
 }
