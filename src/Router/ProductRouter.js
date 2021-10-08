@@ -9,15 +9,15 @@ const ProductRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/qlsanpham/sanpham" exact component={ProductPage} />
-        <Route path="/qlsanpham/sanpham/:id" exact component={DetailsProduct} />
+        <Route path="/MainDrawer/qlsanpham/sanpham" exact component={ProductPage} />
+        <Route path="/MainDrawer/qlsanpham/sanpham/:id" exact component={DetailsProduct} />
         <Route
-          path="/qlsanpham/addsanpham"
+          path="/MainDrawer/qlsanpham/addsanpham"
           exact
           component={InsertProductPage}
         />
         <Route
-          path="/qlsanpham/updatesanpham"
+          path="/MainDrawer/qlsanpham/updatesanpham"
           exact
           component={UpdateProduct}
         />

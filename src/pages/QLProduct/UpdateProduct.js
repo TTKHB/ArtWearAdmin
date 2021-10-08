@@ -64,7 +64,7 @@ const UpdateProduct = () => {
           component="div"
           gutterBottom
         >
-          Thêm sản phẩm
+          Cập nhật sản phẩm
         </Typography>
         <TextField
           required

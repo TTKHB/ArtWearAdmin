@@ -11,8 +11,18 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+//Icon
+import MailIcon from "@mui/icons-material/Email";
+import Customer from "@mui/icons-material/AssignmentInd";
+import AllCustomer from "@mui/icons-material/People";
+import Product from "@mui/icons-material/EventNote";
+import AllProduct from "@mui/icons-material/Article";
+import CreateProduct from "@mui/icons-material/AddCircle";
+import UpdateProduct from "@mui/icons-material/Create";
+import Category from "@mui/icons-material/GridView";
+import AllCategory from "@mui/icons-material/Category";
 import MenuIcon from "@mui/icons-material/Menu";
+
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Router, Switch, Route } from "react-router-dom";
@@ -26,7 +36,6 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
-
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
@@ -36,43 +45,67 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+
+import { useHistory } from 'react-router-dom'
+import { signOut } from '../pages/auth/User';
+import { useLogin } from '../Context/AuthContext';
+
 const drawerWidth = 240;
 
 //sửa đúng cấu trúc để thêm screen to navigate
 const data = [
   {
     id: "1",
-    icon: <MailIcon />,
+    icon: <Product color="primary"/>,
     label: "Quản lý sản phẩm",
     data: [
       {
         label: "Tất cả sản phẩm",
-        icon: <MailIcon />,
-        page: "/qlsanpham/sanpham",
+        icon: <AllProduct color="primary"/>,
+        page: "/MainDrawer/qlsanpham/sanpham",
       },
       {
         label: "Thêm sản phẩm",
-        icon: <MailIcon />,
-        page: "/qlsanpham/addsanpham",
+        icon: <CreateProduct color="primary"/>,
+        page: "/MainDrawer/qlsanpham/addsanpham",
       },
       {
         label: "Cập nhật sản phẩm",
-        icon: <MailIcon />,
-        page: "/qlsanpham/updatesanpham",
+        icon: <UpdateProduct color="primary"/>,
+        page: "/MainDrawer/qlsanpham/updatesanpham",
       },
     ],
   },
   {
     id: "2",
-    icon: <MailIcon />,
-    label: "test1",
+    icon: <Category color="primary"/>,
+    label: "Loại sản phẩm",
     data: [
-      { label: "into test", icon: <MailIcon />, page: "/qltheloai/theloai" },
+      { 
+        label: "Tất cả loại sản phẩm", 
+        icon: <AllCategory color="primary"/>,
+        page: "/MainDrawer/qltheloai/theloai" 
+      },
+    ],
+  },
+  {
+    id: "3",
+    icon: <Customer color="primary" />,
+    label: "Người dùng",
+    data: [
+      { 
+        label: "Tất cả người dùng", 
+        icon: <AllCustomer color="primary" />,
+        page: "/MainDrawer/qltheloai/theloai" 
+      },
     ],
   },
 ];
 
 function MainDrawer(props) {
+  const history = useHistory();
+  const { setIsLoggedIn, profile } = useLogin();
+
   const [open, setOpen] = React.useState(
     JSON.parse(localStorage.getItem("LIST_COLLAPSE")) || []
   );
@@ -196,8 +229,11 @@ function MainDrawer(props) {
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Nested List Items
+          <ListSubheader
+            component="div"
+            id="nested-list-subheader"
+            sx={{ fontWeight: 'bold', fontSize: '18px', color: 'black' }}>
+            Cửa hàng ArtWear
           </ListSubheader>
         }
       >
@@ -247,11 +283,11 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                        selectedItem.index == index
+                          selectedItem.index == index
                           ? {
-                              borderRadius: 10,
-                              color: "#007FFF",
-                            }
+                            borderRadius: 10,
+                            color: "#007FFF",
+                          }
                           : { borderRadius: 10 }
                       }
                     >
@@ -324,6 +360,22 @@ function MainDrawer(props) {
             >
               <AccountCircle />
             </IconButton>
+
+            <div
+            >
+              <h1
+                onClick={async () => {
+                  const isLoggedOut = await signOut()
+                  if (isLoggedOut) {
+                    setIsLoggedIn(false)
+                    history.push('/login')
+                  }
+                }
+                  // setIsLoggedIn(false)
+                }
+              >logOut</h1>
+            </div>
+
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
