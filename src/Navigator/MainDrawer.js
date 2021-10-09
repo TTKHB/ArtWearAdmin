@@ -289,7 +289,12 @@ function MainDrawer(props) {
   );
 
   const drawer = (
+    //Logo ArtWear(ben trai man hinh)
     <div>
+      <div style={{ height: "0%", marginLeft: '30%' }}>
+        <img style={{ height: "64px", width: '86px' }}
+          src={'https://res.cloudinary.com/artwear/image/upload/v1633767684/imageAdmin/LogoAdmin_ryrkyq.jpg'} />
+      </div>
       <Toolbar />
       <Divider />
       <List
