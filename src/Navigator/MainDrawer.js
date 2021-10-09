@@ -22,6 +22,8 @@ import UpdateProduct from "@mui/icons-material/Create";
 import Category from "@mui/icons-material/GridView";
 import AllCategory from "@mui/icons-material/Category";
 import MenuIcon from "@mui/icons-material/Menu";
+import IconSetting from "@mui/icons-material/Settings";
+import IconLogOut from "@mui/icons-material/Logout";
 
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -50,41 +52,43 @@ import { useHistory } from 'react-router-dom'
 import { signOut } from '../pages/auth/User';
 import { useLogin } from '../Context/AuthContext';
 
+import Dropdown from '../dropdown/Dropdown'
+
 const drawerWidth = 240;
 
 //sửa đúng cấu trúc để thêm screen to navigate
 const data = [
   {
     id: "1",
-    icon: <Product color="primary"/>,
+    icon: <Product color="primary" />,
     label: "Quản lý sản phẩm",
     data: [
       {
         label: "Tất cả sản phẩm",
-        icon: <AllProduct color="primary"/>,
+        icon: <AllProduct color="primary" />,
         page: "/MainDrawer/qlsanpham/sanpham",
       },
       {
         label: "Thêm sản phẩm",
-        icon: <CreateProduct color="primary"/>,
+        icon: <CreateProduct color="primary" />,
         page: "/MainDrawer/qlsanpham/addsanpham",
       },
       {
         label: "Cập nhật sản phẩm",
-        icon: <UpdateProduct color="primary"/>,
+        icon: <UpdateProduct color="primary" />,
         page: "/MainDrawer/qlsanpham/updatesanpham",
       },
     ],
   },
   {
     id: "2",
-    icon: <Category color="primary"/>,
+    icon: <Category color="primary" />,
     label: "Loại sản phẩm",
     data: [
-      { 
-        label: "Tất cả loại sản phẩm", 
-        icon: <AllCategory color="primary"/>,
-        page: "/MainDrawer/qltheloai/theloai" 
+      {
+        label: "Tất cả loại sản phẩm",
+        icon: <AllCategory color="primary" />,
+        page: "/MainDrawer/qltheloai/theloai"
       },
     ],
   },
@@ -93,16 +97,82 @@ const data = [
     icon: <Customer color="primary" />,
     label: "Người dùng",
     data: [
-      { 
-        label: "Tất cả người dùng", 
+      {
+        label: "Tất cả người dùng",
         icon: <AllCustomer color="primary" />,
-        page: "/MainDrawer/qltheloai/theloai" 
+        page: "/MainDrawer/qltheloai/theloai"
       },
     ],
   },
 ];
 
+const dataProfile = [
+  {
+    id: "1",
+    icon: <Customer color="primary" />,
+    label: "Thông tin cá nhân",
+    link: "/MainDrawer/qltheloai/theloai"
+  },
+  {
+    id: "2",
+    icon: <IconSetting color="primary" />,
+    label: "Cài đặt",
+    link: "/login"
+  },
+  {
+    id: "3",
+    icon: <IconLogOut color="primary" />,
+    labelDangXuat: "Đăng xuất",
+  },
+];
+
+
 function MainDrawer(props) {
+
+  //Biến chứa ảnh admin khi login
+  const renderUserToggle = () => (
+    <div>
+      <div className="topnav__right-user__image">
+        <img
+          src={
+            profile ? profile.avatar ||
+              'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
+            : 'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
+          }
+          size={90}
+        />
+      </div>
+    </div>
+  )
+
+  const renderUserMenu = (item, index) => (
+    <Link to='/MainDrawer/qlsanpham/sanpham' key={index}>
+      <div className="notification-item">
+        <i>{item.icon}</i>
+         {/* Onlick qua trang thông tin cá nhân hoặc cài đặt */}
+        <span
+          onClick={() => {
+            history.push(item.link)
+          }}
+        >{item.label}</span>
+        {/* Đăng Xuất */}
+        <span
+          onClick={async () => {
+            const isLoggedOut = await signOut()
+            if (isLoggedOut) {
+              setIsLoggedIn(false)
+              history.push('/login')
+            } else {
+              history.push(item.link)
+            }
+          }}
+        >{item.labelDangXuat}
+        </span>
+      </div>
+    </Link>
+  )
+
+
   const history = useHistory();
   const { setIsLoggedIn, profile } = useLogin();
 
@@ -150,7 +220,7 @@ function MainDrawer(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -349,7 +419,9 @@ function MainDrawer(props) {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
+
+            {/* Khoá tạm thời */}
+            {/* <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -359,24 +431,20 @@ function MainDrawer(props) {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
 
-            <div
-            >
-              <h1
-                onClick={async () => {
-                  const isLoggedOut = await signOut()
-                  if (isLoggedOut) {
-                    setIsLoggedIn(false)
-                    history.push('/login')
-                  }
-                }
-                  // setIsLoggedIn(false)
-                }
-              >logOut</h1>
+            <div className="topnav__right">
+              <div className="topnav__right-item">
+                {/* dropdown here */}
+                <Dropdown
+                  customToggle={() => renderUserToggle()}
+                  contentData={dataProfile}
+                  renderItems={(item, index) => renderUserMenu(item, index)}
+                />
+              </div>
             </div>
-
           </Box>
+          
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -429,7 +497,7 @@ function MainDrawer(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3 }}
+        // sx={{ flexGrow: 1, p: 3 }}
         style={{
           backgroundColor: "rgb(248 248 252)",
         }}

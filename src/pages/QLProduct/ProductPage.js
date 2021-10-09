@@ -105,7 +105,7 @@ export default function RecipeReviewCard(props) {
   const HandleNavigateDetails = (id) => {
     // history.push({"/qlsanpham/sanpham/" + id});
     history.push({
-      pathname: "/qlsanpham/sanpham/" + id,
+      pathname: "/MainDrawer/qlsanpham/sanpham/" + id,
       state: { id: id },
     });
   };
