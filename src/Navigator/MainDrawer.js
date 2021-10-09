@@ -60,46 +60,46 @@ const drawerWidth = 240;
 const data = [
   {
     id: "1",
-    icon: <Product color="primary" />,
+    icon: <Product style={{ color: '#8D6E63' }} />,
     label: "Quản lý sản phẩm",
     data: [
       {
         label: "Tất cả sản phẩm",
-        icon: <AllProduct color="primary" />,
+        icon: <AllProduct style={{ color: '#8D6E63' }} />,
         page: "/MainDrawer/qlsanpham/sanpham",
       },
       {
         label: "Thêm sản phẩm",
-        icon: <CreateProduct color="primary" />,
+        icon: <CreateProduct style={{ color: '#8D6E63' }} />,
         page: "/MainDrawer/qlsanpham/addsanpham",
       },
       {
         label: "Cập nhật sản phẩm",
-        icon: <UpdateProduct color="primary" />,
+        icon: <UpdateProduct style={{ color: '#8D6E63' }} />,
         page: "/MainDrawer/qlsanpham/updatesanpham",
       },
     ],
   },
   {
     id: "2",
-    icon: <Category color="primary" />,
+    icon: <Category style={{ color: '#8D6E63' }} />,
     label: "Loại sản phẩm",
     data: [
       {
         label: "Tất cả loại sản phẩm",
-        icon: <AllCategory color="primary" />,
+        icon: <AllCategory style={{ color: '#8D6E63' }} />,
         page: "/MainDrawer/qltheloai/theloai"
       },
     ],
   },
   {
     id: "3",
-    icon: <Customer color="primary" />,
-    label: "Người dùng",
+    icon: <Customer style={{ color: '#8D6E63' }} />,
+    label: "Khách hàng",
     data: [
       {
-        label: "Tất cả người dùng",
-        icon: <AllCustomer color="primary" />,
+        label: "Tất cả khách hàng",
+        icon: <AllCustomer style={{ color: '#8D6E63' }} />,
         page: "/MainDrawer/qltheloai/theloai"
       },
     ],
@@ -109,19 +109,19 @@ const data = [
 const dataProfile = [
   {
     id: "1",
-    icon: <Customer color="primary" />,
+    icon: <Customer style={{ color: '#8D6E63' }} />,
     label: "Thông tin cá nhân",
     link: "/MainDrawer/qltheloai/theloai"
   },
   {
     id: "2",
-    icon: <IconSetting color="primary" />,
+    icon: <IconSetting style={{ color: '#8D6E63' }} />,
     label: "Cài đặt",
     link: "/login"
   },
   {
     id: "3",
-    icon: <IconLogOut color="primary" />,
+    icon: <IconLogOut style={{ color: '#8D6E63' }} />,
     labelDangXuat: "Đăng xuất",
   },
 ];
@@ -137,7 +137,7 @@ function MainDrawer(props) {
           src={
             profile ? profile.avatar ||
               'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
-            : 'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
+              : 'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
           }
           size={90}
         />
@@ -146,10 +146,10 @@ function MainDrawer(props) {
   )
 
   const renderUserMenu = (item, index) => (
-    <Link to='/MainDrawer/qlsanpham/sanpham' key={index}>
+    <div key={index}>
       <div className="notification-item">
         <i>{item.icon}</i>
-         {/* Onlick qua trang thông tin cá nhân hoặc cài đặt */}
+        {/* Onlick qua trang thông tin cá nhân hoặc cài đặt */}
         <span
           onClick={() => {
             history.push(item.link)
@@ -169,7 +169,7 @@ function MainDrawer(props) {
         >{item.labelDangXuat}
         </span>
       </div>
-    </Link>
+    </div >
   )
 
 
@@ -239,6 +239,7 @@ function MainDrawer(props) {
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
 
+  //Menu mobile thu nhỏ
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -275,18 +276,15 @@ function MainDrawer(props) {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+        {/* dropdown here */}
+        <Dropdown
+          customToggle={() => renderUserToggle()}
+        />
+        <p>Admin</p>
       </MenuItem>
+
     </Menu>
   );
 
@@ -302,7 +300,7 @@ function MainDrawer(props) {
           <ListSubheader
             component="div"
             id="nested-list-subheader"
-            sx={{ fontWeight: 'bold', fontSize: '18px', color: 'black' }}>
+            sx={{ fontWeight: 'bold', fontSize: '20px', color: 'black' }}>
             Cửa hàng ArtWear
           </ListSubheader>
         }
@@ -362,7 +360,7 @@ function MainDrawer(props) {
                       }
                     >
                       <ListItemIcon>{data.icon}</ListItemIcon>
-                      <ListItemText primary={data.label} />
+                      <ListItemText primary={data.label} className="ListItemText" />
                     </ListItemButton>
                   </List>
                 </Collapse>
@@ -386,6 +384,7 @@ function MainDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor: '#8D6E63'
         }}
       >
         <Toolbar>
@@ -420,19 +419,6 @@ function MainDrawer(props) {
               </Badge>
             </IconButton>
 
-            {/* Khoá tạm thời */}
-            {/* <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
-
             <div className="topnav__right">
               <div className="topnav__right-item">
                 {/* dropdown here */}
@@ -444,7 +430,7 @@ function MainDrawer(props) {
               </div>
             </div>
           </Box>
-          
+
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

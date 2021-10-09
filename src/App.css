@@ -177,9 +177,12 @@ button.post-button.btn:active {
 	font-weight: bold;
 	font-size: 25px;
 }
-
-
-
+.ListItemText{
+	color: black;
+}
+.ListItemText:hover{
+	color: #8D6E63;
+}
 
 .topnav {
     padding: 30px;
@@ -192,6 +195,8 @@ button.post-button.btn:active {
 .topnav__right {
     display: flex;
     align-items: center;
+	margin-right: -15px;
+	padding-left: 5px;
 }
 
 .topnav__right-item ~ .topnav__right-item {
@@ -201,15 +206,10 @@ button.post-button.btn:active {
 .notification-item {
     display: flex;
     align-items: center;
-    padding: 20px;
-	background-color: #FDFAF7;
-}
-.notification-item span{
-	font-weight: bold;
+    padding: 15px;
 }
 
 .notification-item:hover {
-    /* background-color: var(--second-bg); */
 	background-color: black;
 	color: white;
 }
@@ -241,4 +241,6 @@ button.post-button.btn:active {
 .topnav__right-user__imagee {
     height: 100px;
 }
+
+
 

@@ -32,17 +32,21 @@
 
 .dropdown__content {
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 3px);
     right: 0;
     width: max-content;
     max-width: 400px;
-    background-color: vaR(--main-bg);
+    background-color: #FFFCF1;
+    border-radius: 10px;
     box-shadow: var(--box-shadow);
-    border-radius: var(--border-radius);
     overflow: hidden;
     transform-origin: top right;
     transform: scale(0);
     transition: transform 0.3s ease 0s;
+    font-weight: bold;
+	font-size: 18px;
+    color: black;
+    margin-right: 15px;
 }
 
 .dropdown__content.active {
