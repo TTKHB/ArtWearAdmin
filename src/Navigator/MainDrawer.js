@@ -48,11 +48,11 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
-import { useHistory } from 'react-router-dom'
-import { signOut } from '../pages/auth/User';
-import { useLogin } from '../Context/AuthContext';
+import { useHistory } from "react-router-dom";
+import { signOut } from "../pages/auth/User";
+import { useLogin } from "../Context/AuthContext";
 
-import Dropdown from '../dropdown/Dropdown'
+import Dropdown from "../dropdown/Dropdown";
 
 const drawerWidth = 240;
 
@@ -60,47 +60,47 @@ const drawerWidth = 240;
 const data = [
   {
     id: "1",
-    icon: <Product style={{ color: '#8D6E63' }} />,
+    icon: <Product style={{ color: "#8D6E63" }} />,
     label: "Quản lý sản phẩm",
     data: [
       {
         label: "Tất cả sản phẩm",
-        icon: <AllProduct style={{ color: '#8D6E63' }} />,
+        icon: <AllProduct style={{ color: "#8D6E63" }} />,
         page: "/MainDrawer/qlsanpham/sanpham",
       },
       {
         label: "Thêm sản phẩm",
-        icon: <CreateProduct style={{ color: '#8D6E63' }} />,
+        icon: <CreateProduct style={{ color: "#8D6E63" }} />,
         page: "/MainDrawer/qlsanpham/addsanpham",
       },
       {
         label: "Cập nhật sản phẩm",
-        icon: <UpdateProduct style={{ color: '#8D6E63' }} />,
+        icon: <UpdateProduct style={{ color: "#8D6E63" }} />,
         page: "/MainDrawer/qlsanpham/updatesanpham",
       },
     ],
   },
   {
     id: "2",
-    icon: <Category style={{ color: '#8D6E63' }} />,
+    icon: <Category style={{ color: "#8D6E63" }} />,
     label: "Loại sản phẩm",
     data: [
       {
         label: "Tất cả loại sản phẩm",
-        icon: <AllCategory style={{ color: '#8D6E63' }} />,
-        page: "/MainDrawer/qltheloai/theloai"
+        icon: <AllCategory style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qltheloai/theloai",
       },
     ],
   },
   {
     id: "3",
-    icon: <Customer style={{ color: '#8D6E63' }} />,
+    icon: <Customer style={{ color: "#8D6E63" }} />,
     label: "Khách hàng",
     data: [
       {
         label: "Tất cả khách hàng",
-        icon: <AllCustomer style={{ color: '#8D6E63' }} />,
-        page: "/MainDrawer/ggg"
+        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/ggg",
       },
     ],
   },
@@ -109,41 +109,40 @@ const data = [
 const dataProfile = [
   {
     id: "1",
-    icon: <Customer style={{ color: '#8D6E63' }} />,
+    icon: <Customer style={{ color: "#8D6E63" }} />,
     label: "Thông tin cá nhân",
-    link: "/MainDrawer/qltheloai/theloai"
+    link: "/MainDrawer/qltheloai/theloai",
   },
   {
     id: "2",
-    icon: <IconSetting style={{ color: '#8D6E63' }} />,
+    icon: <IconSetting style={{ color: "#8D6E63" }} />,
     label: "Cài đặt",
-    link: "/login"
+    link: "/login",
   },
   {
     id: "3",
-    icon: <IconLogOut style={{ color: '#8D6E63' }} />,
+    icon: <IconLogOut style={{ color: "#8D6E63" }} />,
     labelDangXuat: "Đăng xuất",
   },
 ];
 
-
 function MainDrawer(props) {
-
   //Biến chứa ảnh admin khi login
   const renderUserToggle = () => (
     <div>
       <div className="topnav__right-user__image">
         <img
           src={
-            profile ? profile.avatar ||
-              'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
-              : 'https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg'
+            profile
+              ? profile.avatar ||
+                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+              : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
           }
           size={90}
         />
       </div>
     </div>
-  )
+  );
 
   const renderUserMenu = (item, index) => (
     <div key={index}>
@@ -152,26 +151,28 @@ function MainDrawer(props) {
         {/* Onlick qua trang thông tin cá nhân hoặc cài đặt */}
         <span
           onClick={() => {
-            history.push(item.link)
+            history.push(item.link);
           }}
-        >{item.label}</span>
+        >
+          {item.label}
+        </span>
         {/* Đăng Xuất */}
         <span
           onClick={async () => {
-            const isLoggedOut = await signOut()
+            const isLoggedOut = await signOut();
             if (isLoggedOut) {
-              setIsLoggedIn(false)
-              history.push('/login')
+              setIsLoggedIn(false);
+              history.push("/login");
             } else {
-              history.push(item.link)
+              history.push(item.link);
             }
           }}
-        >{item.labelDangXuat}
+        >
+          {item.labelDangXuat}
         </span>
       </div>
-    </div >
-  )
-
+    </div>
+  );
 
   const history = useHistory();
   const { setIsLoggedIn, profile } = useLogin();
@@ -279,21 +280,22 @@ function MainDrawer(props) {
 
       <MenuItem onClick={handleProfileMenuOpen}>
         {/* dropdown here */}
-        <Dropdown
-          customToggle={() => renderUserToggle()}
-        />
+        <Dropdown customToggle={() => renderUserToggle()} />
         <p>Admin</p>
       </MenuItem>
-
     </Menu>
   );
 
   const drawer = (
     //Logo ArtWear(ben trai man hinh)
     <div>
-      <div style={{ height: "0%", marginLeft: '30%' }}>
-        <img style={{ height: "64px", width: '86px' }}
-          src={'https://res.cloudinary.com/artwear/image/upload/v1633767684/imageAdmin/LogoAdmin_ryrkyq.jpg'} />
+      <div style={{ height: "0%", marginLeft: "30%" }}>
+        <img
+          style={{ height: "64px", width: "86px" }}
+          src={
+            "https://res.cloudinary.com/artwear/image/upload/v1633767684/imageAdmin/LogoAdmin_ryrkyq.jpg"
+          }
+        />
       </div>
       <Toolbar />
       <Divider />
@@ -305,7 +307,8 @@ function MainDrawer(props) {
           <ListSubheader
             component="div"
             id="nested-list-subheader"
-            sx={{ fontWeight: 'bold', fontSize: '20px', color: 'black' }}>
+            sx={{ fontWeight: "bold", fontSize: "20px", color: "black" }}
+          >
             Cửa hàng ArtWear
           </ListSubheader>
         }
@@ -356,16 +359,19 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                          selectedItem.index == index
+                        selectedItem.index == index
                           ? {
-                            borderRadius: 10,
-                            color: "#007FFF",
-                          }
+                              borderRadius: 10,
+                              color: "#007FFF",
+                            }
                           : { borderRadius: 10 }
                       }
                     >
                       <ListItemIcon>{data.icon}</ListItemIcon>
-                      <ListItemText primary={data.label} className="ListItemText" />
+                      <ListItemText
+                        primary={data.label}
+                        className="ListItemText"
+                      />
                     </ListItemButton>
                   </List>
                 </Collapse>
@@ -389,7 +395,7 @@ function MainDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: '#8D6E63'
+          backgroundColor: "#8D6E63",
         }}
       >
         <Toolbar>
@@ -488,7 +494,7 @@ function MainDrawer(props) {
       </Box>
       <Box
         component="main"
-        // sx={{ flexGrow: 1, p: 3 }}
+        sx={{ flexGrow: 1, p: 3 }}
         style={{
           backgroundColor: "rgb(248 248 252)",
         }}
