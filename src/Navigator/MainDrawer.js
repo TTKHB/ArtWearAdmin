@@ -100,7 +100,7 @@ const data = [
       {
         label: "Tất cả khách hàng",
         icon: <AllCustomer style={{ color: '#8D6E63' }} />,
-        page: "/MainDrawer/qltheloai/theloai"
+        page: "/MainDrawer/ggg"
       },
     ],
   },

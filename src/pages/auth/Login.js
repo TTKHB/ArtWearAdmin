@@ -29,7 +29,7 @@ const Login = () => {
 					setUserInfo({ email: '', password: '' })
 					setProfile(res.data.user);
 					setIsLoggedIn(true);
-					history.push('/MainDrawer')
+					// history.push('/MainDrawer')
 				} else {
 					console.log("Đăng nhập thất bại")
 				}

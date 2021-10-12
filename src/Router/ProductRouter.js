@@ -4,7 +4,8 @@ import ProductPage from "./../pages/QLProduct/ProductPage";
 import InsertProductPage from "./../pages/QLProduct/InsertProductPage";
 import DetailsProduct from "./../pages/QLProduct/DetailsProduct";
 import UpdateProduct from "./../pages/QLProduct/UpdateProduct";
-
+import ggg from "../pages/QLUser/ggg";
+import ProtectedRoute from "../pages/auth/ProtectedRoute";
 const ProductRouter = () => {
   return (
     <Router>
@@ -20,6 +21,11 @@ const ProductRouter = () => {
           path="/MainDrawer/qlsanpham/updatesanpham"
           exact
           component={UpdateProduct}
+        />
+        <Route
+          path="/MainDrawer/ggg"
+          exact
+          component={ggg}
         />
       </Switch>
     </Router>

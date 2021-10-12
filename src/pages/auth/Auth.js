@@ -1,16 +1,17 @@
 import Login from "../auth/Login"
-import { AuthContext } from '../../Context/AuthContext'
-import { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
-import Spinner from 'react-bootstrap/Spinner'
-
+import { useLogin } from '../../Context/AuthContext';
 const Auth = ({ authRoute }) => {
+	const { isLoggedIn } = useLogin();
 	let body
-	body = (
-		<>
-			{authRoute === 'login' && <Login />}
-		</>
-	)
+	//If Context login = true vào trang MainDrawer và ngược lại 
+	if (isLoggedIn) return <Redirect to='/MainDrawer' />
+	else
+		body = (
+			<>
+				{authRoute === 'login' && <Login />}
+			</>
+		)
 
 	return (
 		<div className='landing'>
