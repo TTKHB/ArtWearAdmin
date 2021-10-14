@@ -4,12 +4,14 @@ import ProductPage from "./../pages/QLProduct/ProductPage";
 import InsertProductPage from "./../pages/QLProduct/InsertProductPage";
 import DetailsProduct from "./../pages/QLProduct/DetailsProduct";
 import UpdateProduct from "./../pages/QLProduct/UpdateProduct";
-import ggg from "../pages/QLUser/ggg";
 import ProtectedRoute from "../pages/auth/ProtectedRoute";
+import UserPage from "../pages/QLUser/UserPage";
+import ErrorErrorURLMain from "../pages/PageNotFound/ErrorURLMain";
 const ProductRouter = () => {
   return (
     <Router>
       <Switch>
+        {/* Sai đường dẫn sẽ vào trang NotFound này */}
         <Route path="/MainDrawer/qlsanpham/sanpham" exact component={ProductPage} />
         <Route path="/MainDrawer/qlsanpham/sanpham/:id" exact component={DetailsProduct} />
         <Route
@@ -25,8 +27,9 @@ const ProductRouter = () => {
         <Route
           path="/MainDrawer/ggg"
           exact
-          component={ggg}
+          component={UserPage}
         />
+        <Route component={ErrorErrorURLMain} />
       </Switch>
     </Router>
   );

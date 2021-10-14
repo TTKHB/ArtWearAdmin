@@ -111,7 +111,7 @@ const dataProfile = [
     id: "1",
     icon: <Customer style={{ color: "#8D6E63" }} />,
     label: "Thông tin cá nhân",
-    link: "/MainDrawer/qltheloai/theloai",
+    link: "/Admin",
   },
   {
     id: "2",
@@ -135,7 +135,7 @@ function MainDrawer(props) {
           src={
             profile
               ? profile.avatar ||
-                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+              "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
               : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
           }
           size={90}
@@ -359,11 +359,11 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                        selectedItem.index == index
+                          selectedItem.index == index
                           ? {
-                              borderRadius: 10,
-                              color: "#007FFF",
-                            }
+                            borderRadius: 10,
+                            color: "#007FFF",
+                          }
                           : { borderRadius: 10 }
                       }
                     >

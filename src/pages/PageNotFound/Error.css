@@ -68,14 +68,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* background-color:white; */
 }
 .imageURLMain{
     margin-left: 3%;
 }
 .imageURLMain img{
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     border-radius: 15px;
 }
 .textErrorMain h1{
