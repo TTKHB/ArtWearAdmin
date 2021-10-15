@@ -1,0 +1,147 @@
+.ContainerAdmin{
+    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+.AvatarAdmin{
+    background-color:white;
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+    box-shadow:1px 1px 5px black; 
+    margin-top: 13%;
+}
+.AvatarAdmin img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.HeaderAdmin{
+    width: 100%;
+    height: 30%;
+    box-shadow:1px 2px 20px #8D6E63; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../assets//images/landing.jpg') no-repeat center center/cover;
+}
+
+.btnSave{
+    font-size: 20px;
+    font-weight: bold;
+    background-color: black;
+    border-color: white;
+    border-width:3px;
+    display: flex;
+    border-radius: 10px;
+}
+.btnSave:hover{
+    background-color: black;
+    color: white;
+    border-color: white;
+    border-width:3px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.btnSaveImage{
+    font-size: 16px;
+    font-weight: bold;
+    background-color: black;
+    border-color: white;
+    border-width:3px;
+    display: flex;
+    border-radius: 10px;
+}
+.btnSaveImage:hover{
+    background-color: black;
+    color: white;
+    border-color: white;
+    border-width:3px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.InfomationAdmin{
+    align-items:'center';
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 15px #8D6E63; 
+}
+
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+  }
+  
+.modalContainer {
+    width: 500px;
+    height: 300px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin-top: 5%;
+  }
+  
+.modalContainer .title {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+.titleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+.titleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  
+.modalContainer .body {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+  }
+  
+.modalContainer .footer {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.modalContainer .footer button {
+    width: 150px;
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+#BtnSuccess {
+    background-color: #8D6E63;
+}

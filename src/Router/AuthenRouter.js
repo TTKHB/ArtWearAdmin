@@ -6,6 +6,7 @@ import MainDrawer from "../Navigator/MainDrawer";
 import { useLogin } from '../Context/AuthContext';
 import ProtectedRoute from "../pages/auth/ProtectedRoute";
 import NotFound from "../pages/PageNotFound/NotFound";
+import AdminRouter from "./AdminRouter";
 
 //Tại đây sẽ chứa Screen Login và screen MainDrawer
 const AuthenRouter = () => {
@@ -23,6 +24,9 @@ const AuthenRouter = () => {
         <ProtectedRoute
           path='/MainDrawer'
           component={MainDrawer} />
+        <ProtectedRoute
+          path='/Admin'
+          component={AdminRouter} />
         {/* Sai đường dẫn sẽ vào trang NotFound này */}
         <Route component={NotFound} />
       </Switch>
