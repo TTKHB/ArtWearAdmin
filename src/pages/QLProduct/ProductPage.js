@@ -87,16 +87,27 @@ export default function RecipeReviewCard(props) {
 
   const [expanded, setExpanded] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [itemOfProduct, setItemOfProduct] = React.useState(null);
   const location = useLocation();
+
+  let history = useHistory();
   console.log(location.pathname);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event, item) => {
     setAnchorEl(event.currentTarget);
+    setItemOfProduct(item);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  let history = useHistory();
+  const handleClickedItem = (index) => {
+    console.log("item a", index);
+    history.push({
+      pathname: "/MainDrawer/qlsanpham/updatesanpham",
+      state: { item: itemOfProduct },
+    });
+    setAnchorEl(null);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -168,7 +179,10 @@ export default function RecipeReviewCard(props) {
             <Card sx={{ maxWidth: 320 }}>
               <CardHeader
                 action={
-                  <IconButton aria-label="settings" onClick={handleClick}>
+                  <IconButton
+                    aria-label="settings"
+                    onClick={(e) => handleClick(e, item)}
+                  >
                     <MoreVertIcon />
                   </IconButton>
                 }
@@ -185,11 +199,11 @@ export default function RecipeReviewCard(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} disableRipple>
+                <MenuItem onClick={handleClickedItem} disableRipple>
                   <EditIcon />
                   Edit
                 </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
+                {/* <MenuItem onClick={handleClose} disableRipple>
                   <FileCopyIcon />
                   Duplicate
                 </MenuItem>
@@ -201,7 +215,7 @@ export default function RecipeReviewCard(props) {
                 <MenuItem onClick={handleClose} disableRipple>
                   <MoreHorizIcon />
                   More
-                </MenuItem>
+                </MenuItem> */}
               </StyledMenu>
 
               <CardMedia

@@ -20,7 +20,9 @@ const DetailsProduct = (props) => {
   const [products, setProducts] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [colors, setColors] = React.useState([]);
+
   const [selectColor, setSelectColor] = React.useState("");
+
   const [ImgSrc, setImgSrc] = React.useState([]);
 
   const location = useLocation();
@@ -55,28 +57,37 @@ const DetailsProduct = (props) => {
 
   //handle and fetch color
   React.useEffect(() => {
+    // selected color đầu tiên khi có màu
+
     let color = [];
-    images.forEach((item) => {
-      color.push(item.mau);
-    });
-    setColors([...color]);
-    console.log("hello", colors);
+    if (images) {
+      images.forEach((item) => {
+        color.push(item.mau);
+      });
+      setColors([...color]);
+      console.log("hello", colors);
+    }
+    // set color dau tien
+    setSelectColor(color[0]);
     return () => {
       setColors([]);
     };
   }, [images]);
 
   React.useEffect(() => {
-    const indexOfColor = images.findIndex((item) => {
-      return item.mau == selectColor;
-    });
-    let imgsrc = [];
-    if (indexOfColor != -1) {
-      const data = images[indexOfColor].image.forEach((image) => {
-        imgsrc.push({ src: image });
+    if (images) {
+      const indexOfColor = images.findIndex((item) => {
+        return item.mau == selectColor;
       });
-      setImgSrc([...imgsrc]);
+      let imgsrc = [];
+      if (indexOfColor != -1) {
+        const data = images[indexOfColor].image.forEach((image) => {
+          imgsrc.push({ src: image });
+        });
+        setImgSrc([...imgsrc]);
+      }
     }
+
     // setImages(img);
   }, [images, selectColor]);
 
@@ -188,20 +199,24 @@ const DetailsProduct = (props) => {
               columns={{ xs: 4, sm: 8, md: 12 }}
             >
               <Grid item>
-                {colors.map((color, index) => {
-                  return (
-                    <Chip
-                      onClick={() => {
-                        setSelectColor(color);
-                      }}
-                      icon={<CircleIcon style={{ color: color }} />}
-                      label={color}
-                      style={{ margin: 3 }}
-                      color={selectColor == color ? "primary" : "default"}
-                      variant={selectColor == color ? null : "outlined"}
-                    />
-                  );
-                })}
+                {colors.length != 0 ? (
+                  colors.map((color, index) => {
+                    return (
+                      <Chip
+                        onClick={() => {
+                          setSelectColor(color);
+                        }}
+                        icon={<CircleIcon style={{ color: color }} />}
+                        label={color}
+                        style={{ margin: 3 }}
+                        color={selectColor == color ? "primary" : "default"}
+                        variant={selectColor == color ? null : "outlined"}
+                      />
+                    );
+                  })
+                ) : (
+                  <Typography variant="h6">Không có màu</Typography>
+                )}
               </Grid>
             </Grid>
             <Typography variant="h5" style={{ fontWeight: "bold" }}>

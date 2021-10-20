@@ -293,7 +293,7 @@ function MainDrawer(props) {
         <img
           style={{ height: "64px", width: "86px" }}
           src={
-            "https://res.cloudinary.com/artwear/image/upload/v1633767684/imageAdmin/LogoAdmin_ryrkyq.jpg"
+            "https://f49-zpg.zdn.vn/9171954124504311799/bf9d9b4571d1b88fe1c0.jpg"
           }
         />
       </div>
