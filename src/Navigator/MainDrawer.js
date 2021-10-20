@@ -53,6 +53,7 @@ import { signOut } from "../pages/auth/User";
 import { useLogin } from "../Context/AuthContext";
 
 import Dropdown from "../dropdown/Dropdown";
+import MenuRouter from "../Router/MenuRouter";
 
 const drawerWidth = 240;
 
@@ -104,6 +105,18 @@ const data = [
       },
     ],
   },
+  {
+    id: "4",
+    icon: <Customer style={{ color: "#8D6E63" }} />,
+    label: "Quản lý Menu",
+    data: [
+      {
+        label: "Tất cả bảng menu",
+        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlmenu/menu",
+      },
+    ],
+  },
 ];
 
 const dataProfile = [
@@ -135,7 +148,7 @@ function MainDrawer(props) {
           src={
             profile
               ? profile.avatar ||
-              "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
               : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
           }
           size={90}
@@ -359,11 +372,11 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                          selectedItem.index == index
+                        selectedItem.index == index
                           ? {
-                            borderRadius: 10,
-                            color: "#007FFF",
-                          }
+                              borderRadius: 10,
+                              color: "#007FFF",
+                            }
                           : { borderRadius: 10 }
                       }
                     >
@@ -502,6 +515,7 @@ function MainDrawer(props) {
         {/* add router */}
         <Toolbar />
         <ProductRouter />
+        <MenuRouter />
       </Box>
     </Box>
   );
