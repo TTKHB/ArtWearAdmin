@@ -20,7 +20,11 @@ const AuthContextProvider = ({ children }) => {
             // Set profile when login true
             if (res.data.success) {
                 setProfile(res.data.profile)
-                setIsLoggedIn(true)
+                if(res.data.profile.role !== 'admin'){
+                    setIsLoggedIn(false);
+                  }else{
+                    setIsLoggedIn(true);
+                  }
             // else false
             } else {
                 setProfile({})
