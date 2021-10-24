@@ -509,7 +509,7 @@ function MainDrawer(props) {
         component="main"
         sx={{ flexGrow: 1, p: 3 }}
         style={{
-          backgroundColor: "rgb(248 248 252)",
+          backgroundColor: "white",
         }}
       >
         {/* add router */}
