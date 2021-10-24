@@ -92,7 +92,7 @@ const DetailsProduct = (props) => {
   }, [images, selectColor]);
 
   return (
-    <Container style={{ backgroundColor: "rgb(248 248 252)" }}>
+    <Container style={{ backgroundColor: "white" }}>
       <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
         <Grid item xs={8} style={{}}>
           <Breadcrumbs aria-label="breadcrumb">
