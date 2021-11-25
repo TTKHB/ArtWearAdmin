@@ -7,6 +7,7 @@ import { useLogin } from '../Context/AuthContext';
 import ProtectedRoute from "../pages/auth/ProtectedRoute";
 import NotFound from "../pages/PageNotFound/NotFound";
 import AdminRouter from "./AdminRouter";
+import ResetPassUser from "../pages/QLUser/ResetPassUser";
 
 //Tại đây sẽ chứa Screen Login và screen MainDrawer
 const AuthenRouter = () => {
@@ -28,6 +29,8 @@ const AuthenRouter = () => {
           path='/Admin'
           component={AdminRouter} />
         {/* Sai đường dẫn sẽ vào trang NotFound này */}
+
+        <Route exact path='/api/v1/users/resetPassword/:token' component={ResetPassUser} />
         <Route component={NotFound} />
       </Switch>
     </Router>

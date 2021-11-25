@@ -5,6 +5,7 @@ import { useState, useContext } from 'react'
 import { isValidObjField, updateError, isValidEmail } from './CheckForm';
 import { useLogin } from '../../Context/AuthContext';
 import { signIn } from '../../pages/auth/User';
+import Modal from "../../pages/Admin/ModalLoginError";
 const Login = () => {
 
 	const { setIsLoggedIn, setProfile } = useLogin();
@@ -28,10 +29,18 @@ const Login = () => {
 				if (res.data.success) {
 					setUserInfo({ email: '', password: '' })
 					setProfile(res.data.user);
-					setIsLoggedIn(true);
-					// history.push('/MainDrawer')
+					// setIsLoggedIn(true);
+					if (res.data.user.role !== 'admin') {
+						setIsLoggedIn(false);
+						setModalOpen(true);
+					}
+					else {
+						setIsLoggedIn(true);
+					}
+
 				} else {
 					console.log("Đăng nhập thất bại")
+					setModalOpen(true);
 				}
 			} catch (error) {
 				console.log(error.message);
@@ -54,22 +63,20 @@ const Login = () => {
 		if (!isValidEmail(email)) {
 			return updateError('Email sai định dạng!', setError);
 		}
-		if (email !== "admin@gmail.com") {
-			return updateError('Email admin không tồn tại!', setError);
-		}
-		if (password !== "admin123") {
-			return updateError('Password admin sai!', setError);
-		}
 		return true;
 	}
 
+	// Open Modal
+	const [modalOpen, setModalOpen] = useState(false);
+
 	return (
 		<>
+			{/* Open Model Eror when login faild */}
+			{modalOpen && <Modal setOpenModal={setModalOpen} />}
 			{/* Check lỗi form sẽ hiện text tại đây */}
 			{error ? (
 				<h2 className='text-error'>{error}</h2>
 			) : null}
-
 			<Form className='my-4'
 				onSubmit={submitForm}
 			>
