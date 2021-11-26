@@ -1,9 +1,9 @@
-import * as React from 'react';
-// import InputUnstyled from '@mui/core/InputUnstyled';
-import { InputUnstyled } from '@mui/core';
-import { styled } from '@mui/system';
+import * as React from "react";
+import InputUnstyled from "@mui/core/InputUnstyled";
+// import { InputUnstyled } from '@mui/core';
+import { styled } from "@mui/system";
 
-const StyledInputElement = styled('input')`
+const StyledInputElement = styled("input")`
   width: 400px;
   height: 50px;
   marginLeft: 30px,
@@ -32,9 +32,12 @@ const StyledInputElement = styled('input')`
 
 const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   return (
-    <InputUnstyled components={{ Input: StyledInputElement }} {...props} ref={ref} />
+    <InputUnstyled
+      components={{ Input: StyledInputElement }}
+      {...props}
+      ref={ref}
+    />
   );
 });
-
 
 export default CustomInput;

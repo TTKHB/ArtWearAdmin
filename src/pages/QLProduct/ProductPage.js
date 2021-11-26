@@ -85,7 +85,6 @@ export default function RecipeReviewCard(props) {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
   const [expanded, setExpanded] = React.useState(false);
   const [openDeleteFailed, setOpenDeleteFailed] = React.useState(false);
   const [openDeleteSuccess, setOpenDeleteSuccess] = React.useState(false);
@@ -113,16 +112,17 @@ export default function RecipeReviewCard(props) {
     setAnchorEl(null);
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = async () => {
     const id = itemOfProduct.id;
-    const status = deleteProductsById(id);
+    const status = await deleteProductsById(id);
     if (status) {
       setOpenDialogCofirm(false);
+      getAllProducts();
+
       console.log("thanh cong");
     } else {
       console.log("that bai");
     }
-    getAllProducts();
     setAnchorEl(null);
   };
 
