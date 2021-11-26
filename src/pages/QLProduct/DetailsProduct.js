@@ -73,7 +73,7 @@ const DetailsProduct = (props) => {
       setColors([]);
     };
   }, [images]);
-
+  
   React.useEffect(() => {
     if (images) {
       const indexOfColor = images.findIndex((item) => {

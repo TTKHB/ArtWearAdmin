@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductPage from "./../pages/QLProduct/ProductPage";
+import AllProduct from "../pages/QLProduct/AllProduct";
 import InsertProductPage from "./../pages/QLProduct/InsertProductPage";
 import DetailsProduct from "./../pages/QLProduct/DetailsProduct";
 import UpdateProduct from "./../pages/QLProduct/UpdateProduct";
@@ -13,6 +14,11 @@ const ProductRouter = () => {
     <Router>
       <Switch>
         {/* Sai đường dẫn sẽ vào trang NotFound này */}
+        <Route
+          path="/MainDrawer/qlsanpham/allsanpham"
+          exact
+          component={AllProduct}
+        />
         <Route
           path="/MainDrawer/qlsanpham/sanpham"
           exact

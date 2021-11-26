@@ -54,6 +54,8 @@ import { useLogin } from "../Context/AuthContext";
 
 import Dropdown from "../dropdown/Dropdown";
 import MenuRouter from "../Router/MenuRouter";
+import NotificationRouter from "../Router/NotificationRouter";
+import OrdersRouter from "../Router/OrdersRouter";
 
 const drawerWidth = 240;
 
@@ -64,6 +66,11 @@ const data = [
     icon: <Product style={{ color: "#8D6E63" }} />,
     label: "Quản lý sản phẩm",
     data: [
+      {
+        label: "Tất cả sản phẩm",
+        icon: <AllProduct style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlsanpham/allsanpham",
+      },
       {
         label: "Tất cả sản phẩm",
         icon: <AllProduct style={{ color: "#8D6E63" }} />,
@@ -108,12 +115,46 @@ const data = [
   {
     id: "4",
     icon: <Customer style={{ color: "#8D6E63" }} />,
+    label: "Đặt Hàng",
+    data: [
+      {
+        label: "Tất cả đơn hàng",
+        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlorders/orders",
+      },
+      {
+        label: "Chi tiết đơn hàng",
+        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlorders/detailsorders",
+      },
+    ],
+  },
+  {
+    id: "5",
+    icon: <Customer style={{ color: "#8D6E63" }} />,
     label: "Quản lý Menu",
     data: [
       {
         label: "Tất cả bảng menu",
         icon: <AllCustomer style={{ color: "#8D6E63" }} />,
         page: "/MainDrawer/qlmenu/menu",
+      },
+    ],
+  },
+  {
+    id: "6",
+    icon: <NotificationsIcon style={{ color: "#8D6E63" }} />,
+    label: "Quản lý thông báo",
+    data: [
+      {
+        label: "Tất cả thông báo",
+        icon: <AllProduct style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlnotification/notification",
+      },
+      {
+        label: "Thêm thông báo",
+        icon: <CreateProduct style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlnotification/addnotification",
       },
     ],
   },
@@ -148,7 +189,7 @@ function MainDrawer(props) {
           src={
             profile
               ? profile.avatar ||
-                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+              "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
               : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
           }
           size={90}
@@ -372,11 +413,11 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                        selectedItem.index == index
+                          selectedItem.index == index
                           ? {
-                              borderRadius: 10,
-                              color: "#007FFF",
-                            }
+                            borderRadius: 10,
+                            color: "#007FFF",
+                          }
                           : { borderRadius: 10 }
                       }
                     >
@@ -516,6 +557,8 @@ function MainDrawer(props) {
         <Toolbar />
         <ProductRouter />
         <MenuRouter />
+        <NotificationRouter />
+        <OrdersRouter />
       </Box>
     </Box>
   );

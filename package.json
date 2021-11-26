@@ -3,23 +3,49 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@emotion/react": "^11.4.1",
+        "@emotion/react": "^11.5.0",
         "@emotion/styled": "^11.3.0",
+<<<<<<< HEAD
+        "@iconify/icons-eva": "^1.1.0",
+        "@iconify/icons-ic": "^1.1.15",
+        "@iconify/react": "^3.1.0",
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/data-grid": "^4.0.0-alpha.37",
+        "@material-ui/icons": "^4.11.2",
+        "@mui/icons-material": "^5.0.5",
+        "@mui/lab": "^5.0.0-alpha.53",
+        "@mui/material": "^5.1.0",
+        "@mui/styled-engine-sc": "^5.0.4",
+        "@mui/styles": "^5.0.2",
+        "@mui/x-data-grid": "^4.0.2",
+        "@mui/x-data-grid-generator": "^4.0.2",
+        "antd": "^4.16.13",
+=======
         "@material-ui/core": "^4.12.3",
         "@material-ui/icons": "^4.11.2",
         "@mui/icons-material": "^5.0.1",
         "@mui/material": "^5.0.1",
         "@react-spring/web": "^9.3.0",
+>>>>>>> 37404c8963147a4e19a2c694fdd683fbf9847b56
         "axios": "^0.22.0",
         "bootstrap": "^5.1.2",
+        "change-case": "^4.1.2",
         "cra-template": "1.1.2",
+<<<<<<< HEAD
+        "faker": "^5.5.3",
+        "formik": "^2.2.9",
+        "i18n": "^0.13.3",
+        "numeral": "^2.0.6",
+=======
         "i": "^0.3.7",
         "material-ui-dropzone": "^3.5.0",
         "npm": "^8.1.4",
+>>>>>>> 37404c8963147a4e19a2c694fdd683fbf9847b56
         "react": "^17.0.2",
         "react-bootstrap": "^1.6.4",
         "react-dom": "^17.0.2",
         "react-gallery-carousel": "^0.2.4",
+        "react-helmet-async": "^1.1.2",
         "react-imask": "^6.2.2",
         "react-number-format": "^4.7.3",
         "react-router-dom": "^5.3.0",
@@ -27,7 +53,13 @@
         "react-spring": "^9.3.1",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^2.0.4",
+<<<<<<< HEAD
+        "simplebar-react": "^2.3.6",
+        "styled-components": "^5.3.3",
+        "swiper": "6.0.2",
+=======
         "swiper": "6.8.4",
+>>>>>>> 37404c8963147a4e19a2c694fdd683fbf9847b56
         "web-vitals": "^2.1.0"
     },
     "scripts": {
