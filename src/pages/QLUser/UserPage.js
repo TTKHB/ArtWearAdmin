@@ -1,292 +1,118 @@
-import { filter } from 'lodash';
-import React from "react";
-import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
-import { useState } from 'react';
-import Box from "@mui/material/Box";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-// material
-import {
-    Card,
-    Table,
-    Stack,
-    Avatar,
-    Button,
-    Checkbox,
-    TableRow,
-    TableBody,
-    TableCell,
-    Container,
-    Typography,
-    TableContainer,
-    TablePagination
-} from '@mui/material';
-// components
-import Page from '../../components/Page';
-import Label from '../../components/Label';
-import Scrollbar from '../../components/Scrollbar';
-import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../QLUser/AllUser/index';
-//
-import USERLIST from '../QLUser/AllUser/User';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "../QLUser/QLUser.css";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+const UserPage = () => {
+    const [users, setUser] = useState([]);
+    const [filterUser, setfilterUser] = useState([]);
+    const [search, setSearch] = useState('');
 
-// ----------------------------------------------------------------------
+    const searchFilter = (event) => {
+        if (event) {
+            const newData = filterUser.filter((item) => {
+                const itemData = item.fullname ? item.fullname.toString().toUpperCase() : ''.toString().toUpperCase();
+                const textData = event.target.value.toString().toString().toUpperCase();
+                return itemData.indexOf(textData) > -1;
+            });
+            console.log(newData)
+            setUser(newData)
+            setSearch(event.target.value)
+        }
+        else {
+            setUser(filterUser)
+            setSearch(event.target.value)
+        }
+    }
 
-const TABLE_HEAD = [
-    { id: 'name', label: 'Name', alignRight: false },
-    { id: 'company', label: 'Company', alignRight: false },
-    { id: 'role', label: 'Role', alignRight: false },
-    { id: 'isVerified', label: 'Verified', alignRight: false },
-    { id: 'status', label: 'Status', alignRight: false },
-    { id: '' }
-];
+    useEffect(() => {
+        loadUsers();
+    }, []);
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const loadUsers = async () => {
+        const result = await axios.get("http://localhost:3000/api/v1/users/UserAll");
+        setUser(result.data.reverse());
+        setfilterUser(result.data.reverse());
+    };
+
+    const deleteUser = async id => {
+        await axios.delete(`http://localhost:3000/api/v1/users/deleteUser/${id}`);
+        loadUsers();
+    };
 
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+        <div className="container">
+            <div className="py-4">
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Tìm kiếm"
+                    defaultValue={search}
+                    onChange={(text) => searchFilter(text)}
+                    // onChangeText={(text) => searchFilter(text)}
+                    style={{paddingBottom:10}}
+                />
+                <table class="table border shadow">
+                    <thead class="headerUser">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Họ tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    {users.map((user, index) => (
+                        <tbody>
+                            {user.role == "user" ? (
+                                <>
+                                    <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <div className="abcd">
+                                            <img className="imageUser"
+                                                src={
+                                                    user
+                                                        ? user.avatar ||
+                                                        "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+                                                        : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+                                                }
+                                            />
+                                            <td>{user.fullname}</td>
+                                        </div>
+                                        <td>{user.email}</td>
+                                        <td>{user.phone}</td>
+                                        <td>{user.address}</td>
+                                        <td>{user.birthday}</td>
+                                        <td>
+                                            <Link
+                                                class="btn btn-outline-primary mr-2"
+                                                to={`/MainDrawer/EditUser/${user._id}`}
+                                            >
+                                                Chỉnh sửa
+                                            </Link>
+                                            <Button
+                                                class="btn btn-danger"
+                                                onClick={() => deleteUser(user._id)}
+                                            >
+                                                Xoá
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                </>
+                            ) : null}
+                        </tbody>
+                    ))}
+                </table>
+            </div>
         </div>
     );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-// ----------------------------------------------------------------------
-
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array, comparator, query) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    if (query) {
-        return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-    }
-    return stabilizedThis.map((el) => el[0]);
-}
-
-export default function UserPage() {
-    const [page, setPage] = useState(0);
-    const [order, setOrder] = useState('asc');
-    const [selected, setSelected] = useState([]);
-    const [orderBy, setOrderBy] = useState('name');
-    const [filterName, setFilterName] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [value, setValue] = React.useState(0);
+export default UserPage;
 
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = USERLIST.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-        setSelected(newSelected);
-    };
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const handleFilterByName = (event) => {
-        setFilterName(event.target.value);
-    };
-
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
-
-    const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
-
-    const isUserNotFound = filteredUsers.length === 0;
-
-    return (
-        // <Page title="User | Minimal-UI">
-        <Container>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-                <Typography variant="h4" gutterBottom>
-                    User
-                </Typography>
-                <Button
-                    variant="contained"
-                    component={RouterLink}
-                    to="#"
-                    startIcon={<Icon icon={plusFill} />}
-                >
-                    New User
-                </Button>
-            </Stack>
-            <Card>
-                <UserListToolbar
-                    numSelected={selected.length}
-                    filterName={filterName}
-                    onFilterName={handleFilterByName}
-                />
-
-                <Scrollbar>
-                    <TableContainer sx={{ minWidth: 800 }}>
-                        <Table>
-                            <UserListHead
-                                order={order}
-                                orderBy={orderBy}
-                                headLabel={TABLE_HEAD}
-                                rowCount={USERLIST.length}
-                                numSelected={selected.length}
-                                onRequestSort={handleRequestSort}
-                                onSelectAllClick={handleSelectAllClick}
-                            />
-                            <TableBody>
-                                {filteredUsers
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row) => {
-                                        const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                                        const isItemSelected = selected.indexOf(name) !== -1;
-
-                                        return (
-                                            <TableRow
-                                                hover
-                                                key={id}
-                                                tabIndex={-1}
-                                                role="checkbox"
-                                                selected={isItemSelected}
-                                                aria-checked={isItemSelected}
-                                            >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        checked={isItemSelected}
-                                                        onChange={(event) => handleClick(event, name)}
-                                                    />
-                                                </TableCell>
-                                                <TableCell component="th" scope="row" padding="none">
-                                                    <Stack direction="row" alignItems="center" spacing={2}>
-                                                        <Avatar alt={name} src={avatarUrl} />
-                                                        <Typography variant="subtitle2" noWrap>
-                                                            {name}
-                                                        </Typography>
-                                                    </Stack>
-                                                </TableCell>
-                                                <TableCell align="left">{company}</TableCell>
-                                                <TableCell align="left">{role}</TableCell>
-                                                <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                                                <TableCell align="left">
-                                                    <Label
-                                                        variant="ghost"
-                                                        color={(status === 'banned' && 'error') || 'success'}
-                                                    >
-                                                        {sentenceCase(status)}
-                                                    </Label>
-                                                </TableCell>
-
-                                                <TableCell align="right">
-                                                    <UserMoreMenu />
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 53 * emptyRows }}>
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                            {isUserNotFound && (
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                                            <SearchNotFound searchQuery={filterName} />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            )}
-                        </Table>
-                    </TableContainer>
-                </Scrollbar>
-
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={USERLIST.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Card>
-        </Container >
-        // {/* </Page> */}
-    );
-}

@@ -36,6 +36,8 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Chat from "@mui/icons-material/Chat";
+import AllChat from "@mui/icons-material/Send";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
 import { useHistory } from "react-router-dom";
@@ -47,7 +49,8 @@ import MenuRouter from "../Router/MenuRouter";
 import NotificationRouter from "../Router/NotificationRouter";
 import OrdersRouter from "../Router/OrdersRouter";
 import StatisticRouter from "./../Router/StatisticRouter";
-
+import UserRouter from "./../Router/UserRouter";
+import Order from "@mui/icons-material/LocalMall";
 const drawerWidth = 240;
 
 //sửa đúng cấu trúc để thêm screen to navigate
@@ -57,11 +60,11 @@ const data = [
     icon: <Product style={{ color: "#8D6E63" }} />,
     label: "Quản lý sản phẩm",
     data: [
-      {
-        label: "Tất cả sản phẩm",
-        icon: <AllProduct style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/qlsanpham/allsanpham",
-      },
+      // {
+      //   label: "Tất cả sản phẩm",
+      //   icon: <AllProduct style={{ color: "#8D6E63" }} />,
+      //   page: "/MainDrawer/qlsanpham/allsanpham",
+      // },
       {
         label: "Tất cả sản phẩm",
         icon: <AllProduct style={{ color: "#8D6E63" }} />,
@@ -79,18 +82,18 @@ const data = [
       },
     ],
   },
-  {
-    id: "2",
-    icon: <Category style={{ color: "#8D6E63" }} />,
-    label: "Loại sản phẩm",
-    data: [
-      {
-        label: "Tất cả loại sản phẩm",
-        icon: <AllCategory style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/qltheloai/theloai",
-      },
-    ],
-  },
+  // {
+  //   id: "2",
+  //   icon: <Category style={{ color: "#8D6E63" }} />,
+  //   label: "Loại sản phẩm",
+  //   data: [
+  //     {
+  //       label: "Tất cả loại sản phẩm",
+  //       icon: <AllCategory style={{ color: "#8D6E63" }} />,
+  //       page: "/MainDrawer/qltheloai/theloai",
+  //     },
+  //   ],
+  // },
   {
     id: "3",
     icon: <Customer style={{ color: "#8D6E63" }} />,
@@ -99,39 +102,39 @@ const data = [
       {
         label: "Tất cả khách hàng",
         icon: <AllCustomer style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/ggg",
+        page: "/MainDrawer/UserPage",
       },
     ],
   },
   {
     id: "4",
-    icon: <Customer style={{ color: "#8D6E63" }} />,
+    icon: <Order style={{ color: "#8D6E63" }} />,
     label: "Đặt Hàng",
     data: [
       {
         label: "Tất cả đơn hàng",
-        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/qlorders/orders",
+        icon: <Order style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/qlorders/PageOrder",
       },
-      {
-        label: "Chi tiết đơn hàng",
-        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/qlorders/detailsorders",
-      },
+      // {
+      //   label: "Chi tiết đơn hàng",
+      //   icon: <Order style={{ color: "#8D6E63" }} />,
+      //   page: "/MainDrawer/qlorders/detailsorders",
+      // },
     ],
   },
-  {
-    id: "5",
-    icon: <Customer style={{ color: "#8D6E63" }} />,
-    label: "Quản lý Menu",
-    data: [
-      {
-        label: "Tất cả bảng menu",
-        icon: <AllCustomer style={{ color: "#8D6E63" }} />,
-        page: "/MainDrawer/qlmenu/menu",
-      },
-    ],
-  },
+  // {
+  //   id: "5",
+  //   icon: <Customer style={{ color: "#8D6E63" }} />,
+  //   label: "Quản lý Menu",
+  //   data: [
+  //     {
+  //       label: "Tất cả bảng menu",
+  //       icon: <AllCustomer style={{ color: "#8D6E63" }} />,
+  //       page: "/MainDrawer/qlmenu/menu",
+  //     },
+  //   ],
+  // },
   {
     id: "6",
     icon: <NotificationsIcon style={{ color: "#8D6E63" }} />,
@@ -151,6 +154,20 @@ const data = [
   },
   {
     id: "7",
+    icon: <Chat style={{ color: "#8D6E63" }} />,
+    label: "Quản lý Chat",
+    data: [
+      {
+        label: "Trò chuyện",
+        icon: <AllChat style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/Messenger",
+      },
+    ],
+  },
+
+  
+  {
+    id: "8",
     icon: <NotificationsIcon style={{ color: "#8D6E63" }} />,
     label: "Thống kê",
     data: [
@@ -567,6 +584,7 @@ function MainDrawer(props) {
         <NotificationRouter />
         <OrdersRouter />
         <StatisticRouter />
+        <UserRouter/>
       </Box>
     </Box>
   );

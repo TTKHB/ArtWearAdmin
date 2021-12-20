@@ -10,10 +10,32 @@ import '../Admin/Admin.css'
 import { useLogin } from '../../Context/AuthContext';
 import baseURL from '../../assets/common/baseUrl';
 import Modal from "../../pages/Admin/Modal";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import { parseImgCloudinaryUser } from "../../Handler/handlerCloudinary";
+const InputFile = styled("input")({
+    display: "none",
+});
 
 const AdminProfile = () => {
     //Profile
     const { profile } = useLogin();
+    const [FileImage, setFileImage] = React.useState("");
+
+    const setFile = (e) => {
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        console.log("e", file);
+        reader.onloadend = () => {
+            setFileImage({
+                file: file,
+                imagePreviewUrl: reader.result,
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+
     const [userInfo, setUserInfo] = useState({
         fullname: profile.fullname,
         email: profile.email,
@@ -30,38 +52,12 @@ const AdminProfile = () => {
     const handleOnChangeText = event =>
         setUserInfo({ ...userInfo, [event.target.name]: event.target.value })
 
-    //Avatar tạo biến riêng do setUserInfo xài event.target.value(image xài e.target.files[0])
-    const [avatar, setAvartar] = useState(profile.avatar);
-
-     //Biến setfile Image 
-    const setFile = (e) => {
-        setAvartar(e.target.files[0]);
-    };
-
-    //Biến update Image lên Cloudinary
-    const handleUpdata = () => {
-        const data = new FormData()
-        data.append('file', avatar)
-        data.append("upload_preset", "_artwear")
-        data.append("cloud_name", "artwear")
-        fetch("https://api.cloudinary.com/v1_1/artwear/image/upload", {
-            method: "post",
-            body: data
-        })
-            .then(res => res.json())
-            .then(data => {
-                //Truyền vào url
-                setAvartar(data.url)
-                console.log(data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
     //Biến cập nhật thông tin admin
     const updateData = async event => {
         event.preventDefault()
+        let mainImg;
+        const linkImg = await parseImgCloudinaryUser(FileImage.imagePreviewUrl);
+        mainImg = linkImg;
         fetch(`${baseURL}/users/update`, {
             method: 'POST',
             headers: {
@@ -71,7 +67,7 @@ const AdminProfile = () => {
                 id: profile._id,
                 fullname: userInfo.fullname,
                 email: userInfo.email,
-                avatar: avatar,
+                avatar: mainImg,
                 phone: userInfo.phone,
                 sex: userInfo.sex,
                 address: userInfo.address,
@@ -93,30 +89,49 @@ const AdminProfile = () => {
     return (
         <div className="ContainerAdmin">
             <div className="HeaderAdmin">
-                <div className="AvatarAdmin">
-                    <img
-                        src={
-                            profile
-                                ? profile.avatar ||
-                                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
-                                : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
-                        } />
+                <div style={{
+                    backgroundColor: 'white',
+                    marginTop: "14%",
+                    width: 200,
+                    height: 200,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: 'flex',
+                    boxShadow: '1px 2px 6px gray'
+                }}>
+                    <div direction="row" alignItems="center" spacing={2}>
+                        <label htmlFor="icon-button-file">
+                            <InputFile
+                                accept="image/*"
+                                multiple
+                                id="icon-button-file"
+                                type="file"
+                                onChange={setFile}
+                            />
+                            <IconButton
+                                color="primary"
+                                aria-label="upload picture"
+                                component="span"
+                            >
+                                <img
+                                    class="fit-picture"
+                                    src={
+                                        FileImage.imagePreviewUrl
+                                            ? FileImage.imagePreviewUrl
+                                            : profile.avatar
+                                    }
+                                    width={200}
+                                    height={200}
+                                    alt="ảnh"
+                                />
+                            </IconButton>
+                        </label>
+                    </div>
                 </div>
+
             </div>
-            <Input
-                accept="image/*"
-                onChange={setFile}
-                type="file"
-                multiple
-                style={{ marginLeft: 9, marginTop: '6%' }}
-            >
-            </Input>
-            <Button onClick={handleUpdata} className='btnSaveImage'>
-                Cập nhật ảnh
-            </Button>
 
             {modalOpen && <Modal setOpenModal={setModalOpen} />}
-
             <Container>
                 <Box
                     component="form"
@@ -210,7 +225,6 @@ const AdminProfile = () => {
                         />
                     </div>
                 </Box>
-
             </Container>
             {/* Footer */}
             <div style={{ height: 50, backgroundColor: 'white', width: '100%', marginTop: 50 }} />

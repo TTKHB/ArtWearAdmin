@@ -6,7 +6,6 @@ import InsertProductPage from "./../pages/QLProduct/InsertProductPage";
 import DetailsProduct from "./../pages/QLProduct/DetailsProduct";
 import UpdateProduct from "./../pages/QLProduct/UpdateProduct";
 import ProtectedRoute from "../pages/auth/ProtectedRoute";
-import UserPage from "../pages/QLUser/UserPage";
 import ErrorErrorURLMain from "../pages/PageNotFound/ErrorURLMain";
 
 const ProductRouter = () => {
@@ -39,8 +38,6 @@ const ProductRouter = () => {
           exact
           component={UpdateProduct}
         />
-        <Route path="/MainDrawer/ggg" exact component={UserPage} />
-        {/* <Route component={ErrorErrorURLMain} /> */}
       </Switch>
     </Router>
   );
