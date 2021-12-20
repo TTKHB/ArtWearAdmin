@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
+import baseURL from "../assets/common/baseUrl";
 
-export default axios.create({baseURL:'http://127.0.0.1:3000/api/v1/users'});
-
+export default axios.create({ baseURL: `${baseURL}/users` });

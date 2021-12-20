@@ -8,7 +8,7 @@ const chart = {
   "2021-05-19": 10,
 };
 
-const MenuPage = () => {
+const statisticOrder = () => {
   return (
     <div>
       <LineChart data={chart} />
@@ -16,4 +16,4 @@ const MenuPage = () => {
   );
 };
 
-export default MenuPage;
+export default statisticOrder;

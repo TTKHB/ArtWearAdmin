@@ -46,6 +46,7 @@ import Dropdown from "../dropdown/Dropdown";
 import MenuRouter from "../Router/MenuRouter";
 import NotificationRouter from "../Router/NotificationRouter";
 import OrdersRouter from "../Router/OrdersRouter";
+import StatisticRouter from "./../Router/StatisticRouter";
 
 const drawerWidth = 240;
 
@@ -145,6 +146,23 @@ const data = [
         label: "Thêm thông báo",
         icon: <CreateProduct style={{ color: "#8D6E63" }} />,
         page: "/MainDrawer/qlnotification/addnotification",
+      },
+    ],
+  },
+  {
+    id: "7",
+    icon: <NotificationsIcon style={{ color: "#8D6E63" }} />,
+    label: "Thống kê",
+    data: [
+      {
+        label: "Thống kê đơn hàng",
+        icon: <AllProduct style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/statistic/statistic_order",
+      },
+      {
+        label: "Thống kê người dùng",
+        icon: <CreateProduct style={{ color: "#8D6E63" }} />,
+        page: "/MainDrawer/statistic/statistic_user",
       },
     ],
   },
@@ -388,7 +406,6 @@ function MainDrawer(props) {
                 <Collapse in={open[item.id]} timeout="auto" unmountOnExit>
                   <List
                     button
-                    component="div"
                     disablePadding
                     component={Link}
                     href={data.page}
@@ -547,6 +564,7 @@ function MainDrawer(props) {
         <Toolbar />
         <ProductRouter />
         <MenuRouter />
+        <StatisticRouter />
         <NotificationRouter />
         <OrdersRouter />
       </Box>

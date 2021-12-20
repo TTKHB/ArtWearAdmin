@@ -28,6 +28,7 @@ import useProduct from "./../../hooks/useProduct";
 import DialogCofirm from "./../../components/dialog/DialogCofirm";
 import Snackbar from "@mui/material/Snackbar";
 import ALertMui from "./../../components/Alert/ALertMui";
+import BasicTable from "../../components/Table/BasicTable";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const StyledMenu = styled((props) => (
