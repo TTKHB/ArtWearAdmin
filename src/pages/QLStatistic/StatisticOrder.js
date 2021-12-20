@@ -1,6 +1,7 @@
 import React from "react";
 import useSatistic from "./../../hooks/useSatistic";
 import useProduct from "./../../hooks/useProduct";
+import { Box, Grid, Container, Typography, CardHeader, Card } from '@mui/material';
 import Chart from "react-apexcharts";
 // import { LineChart } from 'react-chartkick';
 function StatisticOrder() {
@@ -52,9 +53,20 @@ function StatisticOrder() {
   ];
 
   return (
-    <div>
-      <Chart options={options} series={series} type="line" width="600" />
-    </div>
+    <Container maxWidth="xl">
+      <Box sx={{ pb: 5, }}>
+        <Typography variant="h4" style={{ fontWeight: 'bold' }} >Chào mừng đến với Thống kê ArtWear</Typography>
+      </Box>
+      <Grid sm={6} md={8} >
+        <Card>
+          <CardHeader title="Bảng thống kê" subheader="Trong năm 2021" />
+          <Box sx={{ p: 3, pb: 1 }} dir="ltr">
+            <Chart options={options} series={series} type="line" width="800" height={400} />
+          </Box>
+        </Card>
+      </Grid >
+    </Container >
+
   );
 }
 

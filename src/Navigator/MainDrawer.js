@@ -51,6 +51,7 @@ import OrdersRouter from "../Router/OrdersRouter";
 import StatisticRouter from "./../Router/StatisticRouter";
 import UserRouter from "./../Router/UserRouter";
 import Order from "@mui/icons-material/LocalMall";
+import logo from '../assets/images/logoArt.png'
 const drawerWidth = 240;
 
 //sửa đúng cấu trúc để thêm screen to navigate
@@ -165,7 +166,7 @@ const data = [
     ],
   },
 
-  
+
   {
     id: "8",
     icon: <NotificationsIcon style={{ color: "#8D6E63" }} />,
@@ -214,7 +215,7 @@ function MainDrawer(props) {
           src={
             profile
               ? profile.avatar ||
-                "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
+              "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
               : "https://res.cloudinary.com/artwear/image/upload/v1632695686/imageUser/LogoUser_khxsbc.jpg"
           }
           size={90}
@@ -371,9 +372,7 @@ function MainDrawer(props) {
       <div style={{ height: "0%", marginLeft: "30%" }}>
         <img
           style={{ height: "64px", width: "86px" }}
-          src={
-            "https://f49-zpg.zdn.vn/9171954124504311799/bf9d9b4571d1b88fe1c0.jpg"
-          }
+          src={logo}
         />
       </div>
       <Toolbar />
@@ -437,11 +436,11 @@ function MainDrawer(props) {
                       sx={{ pl: 4 }}
                       style={
                         selectedItem.id == item.id &&
-                        selectedItem.index == index
+                          selectedItem.index == index
                           ? {
-                              borderRadius: 10,
-                              color: "#007FFF",
-                            }
+                            borderRadius: 10,
+                            color: "#007FFF",
+                          }
                           : { borderRadius: 10 }
                       }
                     >
@@ -584,7 +583,7 @@ function MainDrawer(props) {
         <NotificationRouter />
         <OrdersRouter />
         <StatisticRouter />
-        <UserRouter/>
+        <UserRouter />
       </Box>
     </Box>
   );
