@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import statisticOrder from "./../pages/Statistic/statisticOrder";
-import statisticUser from "./../pages/Statistic/statisticUser";
+import StatisticOrder from "./../pages/QLStatistic/StatisticOrder";
+import StatisticUser from "./../pages/QLStatistic/StatisticUser";
 
 const StatisticRouter = () => {
   return (
@@ -10,12 +10,12 @@ const StatisticRouter = () => {
         <Route
           path="/MainDrawer/statistic/statistic_order"
           exact
-          component={statisticOrder}
+          component={StatisticOrder}
         />
         <Route
           path="/MainDrawer/statistic/statistic_user"
           exact
-          component={statisticUser}
+          component={StatisticUser}
         />
         {/* <Route component={ErrorErrorURLMain} /> */}
       </Switch>

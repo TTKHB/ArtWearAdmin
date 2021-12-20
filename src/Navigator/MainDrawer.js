@@ -564,9 +564,9 @@ function MainDrawer(props) {
         <Toolbar />
         <ProductRouter />
         <MenuRouter />
-        <StatisticRouter />
         <NotificationRouter />
         <OrdersRouter />
+        <StatisticRouter />
       </Box>
     </Box>
   );
