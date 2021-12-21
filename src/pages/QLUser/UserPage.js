@@ -70,7 +70,7 @@ const UserPage = () => {
                             {user.role == "user" ? (
                                 <>
                                     <tr>
-                                        <th scope="row">{index + 1}</th>
+                                        <th scope="row">{index + 0}</th>
                                         <div className="abcd">
                                             <img className="imageUser"
                                                 src={
