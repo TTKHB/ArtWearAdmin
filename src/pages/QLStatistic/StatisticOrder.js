@@ -9,16 +9,16 @@ function StatisticOrder() {
     return item["date"];
   });
   var totalPriceProcessing = stasticOrderStatus.map(function (item) {
-    return item["processing"].total;
+    return item["processing"].total * 1000;
   });
   var totalPricesWaitForPay = stasticOrderStatus.map(function (item) {
-    return item["waitforpay"].total;
+    return item["waitforpay"].total * 1000;
   });
   var totalPricesShipping = stasticOrderStatus.map(function (item) {
-    return item["shipping"].total;
+    return item["shipping"].total * 1000;
   });
   var totalPricesDelivered = stasticOrderStatus.map(function (item) {
-    return item["delivered"].total;
+    return item["delivered"].total * 1000;
   });
 
   const options = {
